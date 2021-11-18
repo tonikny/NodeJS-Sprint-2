@@ -34,7 +34,7 @@ USE tienda;
 /* 32 */ SELECT p.nombre, p.precio, f.nombre FROM producto AS p INNER JOIN fabricante AS f ON f.codigo = p.codigo_fabricante WHERE p.precio >= 180 ORDER BY p.precio DESC, p.nombre ASC;
 /* 33 */ SELECT DISTINCT f.codigo, f.nombre FROM fabricante AS f INNER JOIN producto AS p ON f.codigo = p.codigo_fabricante;
 /* 34 */ SELECT f.*, p.* FROM fabricante AS f LEFT JOIN producto AS p ON f.codigo = p.codigo_fabricante;
-/* 35 */ SELECT DISTINCT f.* FROM fabricante AS f INNER JOIN producto AS p ON p.codigo_fabricante = f.codigo;
+/* 35 */ SELECT DISTINCT f.* FROM fabricante AS f LEFT JOIN producto AS p ON p.codigo_fabricante = f.codigo WHERE p.codigo IS NULL;
 /* 36 */ SELECT p.* FROM producto AS p INNER JOIN fabricante AS f ON f.codigo = p.codigo_fabricante WHERE f.nombre = 'Lenovo';
 /* 37 */ SELECT * FROM producto WHERE precio = (SELECT MAX(p.precio) FROM producto AS p INNER JOIN fabricante AS f ON f.codigo = p.codigo_fabricante WHERE f.nombre = 'Lenovo');
 /* 38 */ SELECT p.nombre FROM producto AS p INNER JOIN fabricante AS f ON f.codigo = p.codigo_fabricante WHERE precio = (SELECT MAX(precio) FROM producto AS p WHERE f.codigo = codigo_fabricante AND f.nombre = 'Lenovo');
