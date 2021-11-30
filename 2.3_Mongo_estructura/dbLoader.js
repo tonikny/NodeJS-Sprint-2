@@ -123,7 +123,7 @@ async function insert(db, col, objs) {
     } else if (err.code == 11000) {  // MongoBulkWriteError: E11000 duplicate key error collection
       console.log(col, "Error _id duplicat");
     } else {
-      console.log('ERR', err);
+      if (objs.length>0) console.log('ERR', err);
       return;
     }
     console.log(col, 'Documents processats:', err.result.result.insertedIds.length);
