@@ -93,37 +93,39 @@ const schemaBD = {
           bsonType: ['array'],
           additionalProperties: false,
           items: { bsonType: ['objectId'], description: 'Ref a artista' }
+        },
+        album: {
+          bsonType: ['array'],
+          additionalProperties: false,
+          items: {
+            bsonType: 'object',
+            title: 'album',
+            additionalProperties: false,
+            required: ['_id', 'titol'],
+            properties: {
+              _id: { bsonType: 'objectId' },
+              titol: { bsonType: 'string' },
+              any: { bsonType: 'string' },
+              imatge: { bsonType: 'string' },
+              canco: {
+                bsonType: ['array'],
+                additionalProperties: false,
+                items: {
+                  bsonType: 'object',
+                  title: 'canco',
+                  additionalProperties: false,
+                  required: ['_id', 'titol'],
+                  properties: {
+                    _id: { bsonType: 'objectId' },
+                    titol: { bsonType: 'string' },
+                    durada: { bsonType: 'number' },
+                    n_reproduccions: { bsonType: 'number' },
+                  }
+                }
+              }
+            }
+          }
         }
-      }
-    }
-  },
-  album: {
-    $jsonSchema: {
-      bsonType: 'object',
-      title: 'album',
-      additionalProperties: false,
-      required: ['_id', 'titol'],
-      properties: {
-        _id: { bsonType: 'objectId' },
-        titol: { bsonType: 'string' },
-        any: { bsonType: 'string' },
-        imatge: { bsonType: 'string' },
-        artista_id: { bsonType: 'objectId' }
-      }
-    }
-  },
-  canco: {
-    $jsonSchema: {
-      bsonType: 'object',
-      title: 'canco',
-      additionalProperties: false,
-      required: ['_id', 'titol'],
-      properties: {
-        _id: { bsonType: 'objectId' },
-        titol: { bsonType: 'string' },
-        durada: { bsonType: 'number' },
-        n_reproduccions: { bsonType: 'number' },
-        album_id: { bsonType: 'objectId' },
       }
     }
   },
@@ -178,32 +180,29 @@ const inserts = {
     },
     {
       _id: ObjectId('61aa2dabb4422cb67be5bfb3'), nom: 'More RnR', imatge: 'http://url.a.a.imatge/arxiu2',
-      relacio: [ObjectId('61aa2c91b4422cb67be5bfb2')]
+      relacio: [ObjectId('61aa2c91b4422cb67be5bfb2')],
+      album: [
+        {
+          _id: ObjectId('61aa2ec4b4422cb67be5bfb4'), titol: 'The Beginning', any: '2004', imatge: 'http://url.a.a.imatge/album1',
+          canco: [
+            {
+              _id: ObjectId('61aa2ecbb4422cb67be5bfb5'), titol: 'In the beginning', durada: 303, n_reproduccions: 15,
+            },
+            {
+              _id: ObjectId('61aa308cb4422cb67be5bfb7'), titol: 'The last one', durada: 163, n_reproduccions: 25,
+            }
+          ]
+        },
+        {
+          _id: ObjectId('61aa2f54b4422cb67be5bfb6'), titol: 'The End', any: '2005', imatge: 'http://url.a.a.imatge/album2',
+          canco: [
+            {
+              _id: ObjectId('61aa30d1b4422cb67be5bfb8'), titol: 'Summer', durada: 144, n_reproduccions: 33
+            }
+          ]
+        }
+      ],
     }
-  ],
-  album: [
-    {
-      _id: ObjectId('61aa2ec4b4422cb67be5bfb4'), titol: 'The Beginning', any: '2004', imatge: 'http://url.a.a.imatge/album1',
-      artista_id: ObjectId('61aa2dabb4422cb67be5bfb3')
-    },
-    {
-      _id: ObjectId('61aa2f54b4422cb67be5bfb6'), titol: 'The End', any: '2005', imatge: 'http://url.a.a.imatge/album2',
-      artista_id: ObjectId('61aa2dabb4422cb67be5bfb3')
-    }
-  ],
-  canco: [
-    {
-      _id: ObjectId('61aa2ecbb4422cb67be5bfb5'), titol: 'In the beginning', durada: 303, n_reproduccions: 15,
-      album_id: ObjectId('61aa2ec4b4422cb67be5bfb4')
-    },
-    {
-      _id: ObjectId('61aa308cb4422cb67be5bfb7'), titol: 'The last one', durada: 163, n_reproduccions: 25,
-      album_id: ObjectId('61aa2ec4b4422cb67be5bfb4')
-    },
-    {
-      _id: ObjectId('61aa30d1b4422cb67be5bfb8'), titol: 'Summer', durada: 144, n_reproduccions: 33,
-      album_id: ObjectId('61aa2f54b4422cb67be5bfb6')
-    },
   ],
   usuari: [
     {
